@@ -7,8 +7,13 @@ redis = Redis(host='redis', port=6379)
 
 
 def home(request):
+    #Get User from sessionid
+    print('Posting to redis bus')
+    data = request.POST.get('item_text', None)
+    redis.publish('comms', data)
+        
     if request.method == 'POST':
-        Item.objects.create(text=request.POST['item_text'])
+        Item.objects.create(text=data)
         return redirect('/')
     items = Item.objects.all()
     counter = redis.incr('counter')
