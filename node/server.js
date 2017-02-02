@@ -1,6 +1,6 @@
-var http = require('http');
-var server = http.createServer().listen(4000);
-var io = require('socket.io').listen(server);
+// var http = require('http');
+// var server = http.createServer().listen(4000);
+// var io = require('socket.io').listen(server);
  
 var redis = require('redis');
 var sub = redis.createClient();
@@ -9,10 +9,8 @@ var sub = redis.createClient();
  
 sub.subscribe('comms');
 //Grab message from Redis and send to client
-sub.on('message', function(channel, message){
-    if(channel === 'comms')
-        console.log(`Message received: ${message}`);
-    //socket.send(message);
+sub.on('message', function(channel, message){        
+    console.log(`Message received: ${message}`);    
 });
  
 //Configure socket.io to store cookie set by Django
