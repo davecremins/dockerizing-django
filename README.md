@@ -1,18 +1,20 @@
-## Django Development With Docker Compose and Machine
+## Comms Between Different Containers
+
+Forked From -> https://realpython.com/blog/python/django-development-with-docker-compose-and-machine/
 
 Featuring:
 
-- Docker v1.10.3
-- Docker Compose v1.6.2
-- Docker Machine v0.6.0
-- Python 3.5
+- Nginx: Forwards requests to Django and Node
+- Django: Serves the web interface component
+- Postgres: Persistence layer to store all the data
+- Redis: Message broker between Django and Node using Pub/Sub pattern
+- Node: Express server for socket comms and subscriber to Redis Pub/Sub
 
-Blog post -> https://realpython.com/blog/python/django-development-with-docker-compose-and-machine/
+### Instructions
 
-### OS X Instructions
-
-1. Start new machine - `docker-machine create -d virtualbox dev;`
 1. Build images - `docker-compose build`
-1. Start services - `docker-compose up -d`
-1. Create migrations - `docker-compose run web /usr/local/bin/python manage.py migrate`
-1. Grab IP - `docker-machine ip dev` - and view in your browser
+1. Start service containers - `docker-compose up`
+1. Create django migrations - `docker-compose run web /usr/local/bin/python manage.py migrate`
+1. Browse to `http://localhost` and send a message 
+1. Verify that the `node` container prints the message received from the redis broker
+1. Remove containers - `docker-compose down`

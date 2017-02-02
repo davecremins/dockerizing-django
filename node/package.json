@@ -10,8 +10,7 @@
   "author": "dave.cremins",
   "license": "ISC",
   "dependencies": {
-    "cookie": "^0.3.1",
-    "querystring": "^0.2.0",
+    "express": "^4.14.1",
     "redis": "^2.6.5",
     "socket.io": "^1.7.2"
   }
