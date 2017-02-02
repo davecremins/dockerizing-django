@@ -3,7 +3,7 @@
 // var io = require('socket.io').listen(server);
  
 var redis = require('redis');
-var sub = redis.createClient();
+var sub = redis.createClient({host: 'redis'});
 
 //io.adapter(redis({ host: 'localhost', port: 6379 }));
  
