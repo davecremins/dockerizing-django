@@ -21,12 +21,14 @@ services:
     build: ./nginx/
     ports:
       - "80:80"
+      - "4000:4000"
     volumes:
       - /www/static
     volumes_from:
       - web
     links:
       - web:web
+      - node:node
 
   postgres:
     restart: always
@@ -47,5 +49,7 @@ services:
   node:
     restart: always
     build: ./node
+    expose:
+      - "4000"
     depends_on:
       - "redis"

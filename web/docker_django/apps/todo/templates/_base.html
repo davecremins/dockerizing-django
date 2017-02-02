@@ -15,5 +15,15 @@
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="http://localhost:4000/socket.io/socket.io.js"></script>
+    <script>
+      $(document).ready(function(){
+        var socket = io.connect('localhost:4000');
+        
+        socket.on('connect', function(){
+          console.log('connected to socket server');
+        });
+      });
+    </script>
   </body>
 </html>

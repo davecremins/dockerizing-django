@@ -1,11 +1,18 @@
-// var http = require('http');
-// var server = http.createServer().listen(4000);
-// var io = require('socket.io').listen(server);
- 
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 var redis = require('redis');
 var sub = redis.createClient({host: 'redis'});
 
-//io.adapter(redis({ host: 'localhost', port: 6379 }));
+var port = 4000;
+server.listen(port, function () {
+   console.log("Express server running on port %s", port);
+});
+
+io.on('connection', function (socket) {
+    console.log('socket connection received');
+});
  
 sub.subscribe('comms');
 //Grab message from Redis and send to client
