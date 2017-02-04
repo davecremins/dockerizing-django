@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Item
+from .models import Tag
 from redis import Redis
 
 
@@ -8,10 +8,10 @@ redis = Redis(host='redis', port=6379)
 def home(request):
     if request.method == 'POST':
         data = request.POST.get('item_text', None)
-        Item.objects.create(text=data)
+        Tag.objects.create(text=data)
         redis.publish('comms', data)
         return redirect('/')
 
-    items = Item.objects.all()
+    tags = Tag.objects.all()
     counter = redis.incr('counter')
-    return render(request, 'home.html', {'items': items, 'counter': counter})
+    return render(request, 'home.html', {'tags': tags, 'counter': counter})

@@ -25,8 +25,8 @@
 <hr>
 
 <div>
-  {% for item in items %}
-    <h4 class="well"><strong>{{item.text}}</strong> - <em>{{item.date_posted}}</em></h4>
+  {% for tag in tags %}
+    <h4 class="well"><strong>{{tag.tag}}</strong> - <em>{{tag.date_created}}</em></h4>
   {% endfor %}
 </div>
 
