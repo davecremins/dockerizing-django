@@ -54,6 +54,10 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'docker_django.urls'
 
+LOGIN_URL = '/login/'
+
+LOGIN_REDIRECT_URL = '/'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
