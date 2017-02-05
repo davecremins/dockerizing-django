@@ -8,7 +8,7 @@ redis = Redis(host='redis', port=6379)
 def home(request):
     if request.method == 'POST':
         data = request.POST.get('item_text', None)
-        Tag.objects.create(text=data)
+        Tag.objects.create(tag=data)
         redis.publish('comms', data)
         return redirect('/')
 

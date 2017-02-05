@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 
 class Tag(models.Model):
-    id = models.TextField(primary_key=True, blank=False, null=False)
+    id = models.AutoField(primary_key=True)
     tag = models.TextField(blank=False, null=False)
     date_created = models.DateField(auto_now=True)
 
