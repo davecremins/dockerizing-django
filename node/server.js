@@ -14,6 +14,9 @@ io.on('connection', function(socket){
     });
 });
 
+let num = 0;
+setInterval(() => io.emit('test-message', `Message ${++num}`), 5000);
+
 // Setup redis Pub/Sub bus
 var redis = require('redis');
 var sub = redis.createClient({host: 'redis'});

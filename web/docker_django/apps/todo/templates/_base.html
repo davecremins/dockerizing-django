@@ -20,6 +20,9 @@
       $(document).ready(function(){
         var socket = io.connect('localhost:4000');
         socket.emit('register-identifier', $('.user').data('userinfo'));
+        socket.on('test-message', function(data){
+          console.log(data);
+        });
       });
     </script>
   </body>
