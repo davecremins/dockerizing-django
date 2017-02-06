@@ -1,9 +1,4 @@
 let map = {};
-let socketExists = (id) => {
-    let socket = map[id];
-    return typeof socket !== 'undefined' && socket !== null;
-};
-
 let manager = {
     addSocketForId: (socket, id) => {
         map[id] = socket;        
@@ -15,5 +10,4 @@ let manager = {
         delete map[id];
     }
 };
-
 module.exports = manager;
