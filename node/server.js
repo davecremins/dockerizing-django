@@ -1,4 +1,4 @@
 var config = require('./config.json');
-var server = require('./httpServer.js')(config);
-require('./socketServer.js')(server);
-require('./redisBus.js')(config);
+var server = require('./services/httpServer.js')(config);
+require('./services/socketServer.js')(server);
+require('./services/redisBus.js')(config);
