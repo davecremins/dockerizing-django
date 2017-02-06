@@ -3,16 +3,10 @@
 <head>
   <meta charset="utf-8">
   <title>{% block title %}Django Simple Login{% endblock %}</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 </head>
 <body>
   <header>
-    <h1>Django Simple Login</h1>
-    {% if user.is_authenticated %}
-      Hi {{ user.username }}!
-      <a href="{% url 'logout' %}">logout</a>
-    {% else %}
-      <a href="{% url 'login' %}">login</a>
-    {% endif %}
   </header>
   <hr>
   <main>
@@ -21,7 +15,7 @@
   </main>
   <hr>
   <footer>
-    <a href="http://simpleisbetterthancomplex.com">simpleisbetterthancomplex.com</a>
   </footer>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>

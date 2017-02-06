@@ -1,12 +1,29 @@
 {% extends 'loginBase.html' %}
 
-{% block title %}Login{% endblock %}
-
 {% block content %}
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Welcome to my site</h3>
+				</div>
+				<div class="panel-body">
+					<form role="form" method="post">
+            {% csrf_token %}            
+						<fieldset>
+							<div class="form-group">
+								<input class="form-control" placeholder="Username" name="username" type="username" autofocus>
+								</div>
+								<div class="form-group">
+									<input class="form-control" placeholder="Password" name="password" type="password" value="">
+									</div>
+									<button type="submit" class="btn btn-success btn-block">Login</button>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 {% endblock %}
