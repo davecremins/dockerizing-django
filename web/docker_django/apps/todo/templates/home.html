@@ -20,7 +20,10 @@
 <form action="/" method="POST">
   {% csrf_token %}
   <div class="form-group">
-    <input name="item_text" class="form-control input-lg" type="text" placeholder="Enter tags you are interested in..." required>
+    <input name="item_tags" class="form-control input-lg" type="text" placeholder="Enter tags you are interested in..." required>
+  </div>
+  <div class="form-group">
+    <input id="coords" name="coords" class="form-control input-lg hidden" type="text" required>
   </div>
   <input type="submit" class="btn btn-success btn-lg btn-block" value="Submit">
 </form>

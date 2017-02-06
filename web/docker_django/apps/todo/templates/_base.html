@@ -23,6 +23,13 @@
         socket.on('test-message', function(data){
           console.log(data);
         });
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var $coords = $('#coords');
+          $coords.val(position.coords.latitude + ' ' + position.coords.longitude);
+          console.log(position.coords.latitude); 
+          console.log(position.coords.longitude);
+        });
       });
     </script>
   </body>

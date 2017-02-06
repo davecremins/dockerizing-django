@@ -13,9 +13,11 @@ def home(request):
     return list_subbed_tags_for_user(request)
 
 def create_new_sub_tag(request):
-    data = request.POST.get('item_text', None)
-    newTagObj = Tag.objects.create(tag=data)
+    tags = request.POST.get('item_tags', None)
+    coords = request.POST.get('coords', None)
+    newTagObj = Tag.objects.create(tag=tags)
     UserTagLink.objects.create(tag=newTagObj,user=request.user)
+    data = {'coords': coords, 'tags': tags, 'userId': request.user.id}
     redis.publish('comms', data)
     return redirect('/')
 
