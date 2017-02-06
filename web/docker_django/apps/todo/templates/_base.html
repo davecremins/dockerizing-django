@@ -19,10 +19,7 @@
     <script>
       $(document).ready(function(){
         var socket = io.connect('localhost:4000');
-        
-        socket.on('connect', function(){
-          console.log('connected to socket server');
-        });
+        socket.emit('register-identifier', $('.user').data('userinfo'));
       });
     </script>
   </body>
