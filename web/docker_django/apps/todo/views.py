@@ -9,13 +9,17 @@ redis = Redis(host='redis', port=6379)
 @login_required
 def home(request):
     if request.method == 'POST':
-        data = request.POST.get('item_text', None)
-        newTagObj = Tag.objects.create(tag=data)
-        UserTagLink.objects.create(tag=newTagObj,user=request.user)
-        redis.publish('comms', data)
-        return redirect('/')
+        return create_new_sub_tag(request)
+    return list_subbed_tags_for_user(request)
 
-    tags = Tag.objects.all()
-    # Tag.objects.filter(UserTagLink__userid=request.user.id)
+def create_new_sub_tag(request):
+    data = request.POST.get('item_text', None)
+    newTagObj = Tag.objects.create(tag=data)
+    UserTagLink.objects.create(tag=newTagObj,user=request.user)
+    redis.publish('comms', data)
+    return redirect('/')
+
+def list_subbed_tags_for_user(request):
+    tags = Tag.objects.filter(usertaglink__user_id=request.user.id)
     counter = redis.incr('counter')
     return render(request, 'home.html', {'tags': tags, 'counter': counter})
