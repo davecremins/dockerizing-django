@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Tag
+from .models import Tag, UserTagLink
 
 from redis import Redis
 
@@ -10,10 +10,12 @@ redis = Redis(host='redis', port=6379)
 def home(request):
     if request.method == 'POST':
         data = request.POST.get('item_text', None)
-        Tag.objects.create(tag=data)
+        newTagObj = Tag.objects.create(tag=data)
+        UserTagLink.objects.create(tag=newTagObj,user=request.user)
         redis.publish('comms', data)
         return redirect('/')
 
     tags = Tag.objects.all()
+    # Tag.objects.filter(UserTagLink__userid=request.user.id)
     counter = redis.incr('counter')
     return render(request, 'home.html', {'tags': tags, 'counter': counter})
