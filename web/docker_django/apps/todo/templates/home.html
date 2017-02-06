@@ -6,7 +6,9 @@
 <div class="text-center">
   {% load staticfiles %}
   <br>
-  <h3>Welcome <strong style="color: #5cb85c;">{{ user.username }}</strong></h3>
+  <h3>Welcome <strong style="color: #5cb85c;">{{ user.username }}</strong>
+  </h3>
+  <a href="{% url 'logout' %}">logout</a>
   <br>
   <img src="http://media.django.es.s3.amazonaws.com/nuevo/images/djangopony.png">
   <br>
