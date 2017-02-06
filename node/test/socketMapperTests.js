@@ -12,21 +12,25 @@ describe('SocketMapper', function () {
       );
 
       let socket = socketMapper.getSocketForId(1);
-
       expect(socket.id).to.eql(socketId);
    });
 
    it('overwrite socket mapping occurs when same id is used', function () {
-      let socketId = '1234_XYZA83111';
-      
+      let socketId = '1234_XYZA83473';
       socketMapper.addSocketForId({
         id: socketId,
         func: () => {}}, 
         1
       );
+      
+      let newSocketId = '1234_XYZA83111';
+      socketMapper.addSocketForId({
+        id: newSocketId,
+        func: () => {}},
+        1
+      );
 
       let socket = socketMapper.getSocketForId(1);
-
-      expect(socket.id).to.eql(socketId);
+      expect(socket.id).to.eql(newSocketId);
    });
 });
