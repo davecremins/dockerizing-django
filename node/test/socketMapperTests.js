@@ -1,5 +1,5 @@
 let expect = require('expect.js'),
-    socketMapper = require('../socketMapper.js');
+    socketMapper = require('../lib/socketMapper.js');
 
 describe('SocketMapper', function () {
    it('adding mapper should return correctly mapped object', function () {
