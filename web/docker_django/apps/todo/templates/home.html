@@ -6,7 +6,7 @@
 <div class="text-center">
   {% load staticfiles %}
   <br>
-  <h3>Welcome <strong style="color: #5cb85c;">{{ user.username }}</strong>
+  <h3>Welcome <strong class="user" style="color: #5cb85c;" data-userinfo="{{ user.id }}">{{ user.username }}</strong>
   </h3>
   <a href="{% url 'logout' %}">logout</a>
   <br>
