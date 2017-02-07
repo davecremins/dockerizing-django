@@ -51,5 +51,6 @@ services:
     build: ./node
     expose:
       - "4000"
+    env_file: .node_env
     depends_on:
       - "redis"
