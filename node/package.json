@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.14.1",
+    "geopoint": "^1.0.1",
     "redis": "^2.6.5",
     "socket.io": "^1.7.2",
     "twit": "^2.2.5"
