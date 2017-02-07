@@ -9,3 +9,4 @@ __pycache__
 node/node_modules/
 redisdata/
 pgdata/
+.node_env
