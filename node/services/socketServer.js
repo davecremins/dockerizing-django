@@ -11,6 +11,12 @@ let redisMessageHandler = (message) => {
     socketManager.getSocketForId(data.userId).emit('relay-message',`Message: ${data.tags} - Coords: ${data.coords}`);
 };
 
+let twitterDataHandler = (io) => {
+    return (data) => {
+        io.emit('test-message', {tuser: data.user.name, text: data.text});
+    };
+}
+
 module.exports = (server) => {
     let io = require('socket.io')(server);
     io.on('connection', function(socket){
@@ -21,8 +27,7 @@ module.exports = (server) => {
         });
     });
 
-    let num = 0;
-    setInterval(() => io.emit('test-message', `Message ${++num}`), 5000);
-
+    // Should probably register these handlers with socketServer as data feeds
     eventWatcher.on('redisMessage', redisMessageHandler);
+    eventWatcher.on('twitter-data', twitterDataHandler(io));
 };

@@ -14,9 +14,9 @@ let subHandler = (sub, config) => {
 };
 
 let pubHandler = (pub, config) => {
-    eventPubSub.on('twitter-data', (data) => {
-        pub.publish(config.redisAggChannel, data);
-    });
+    // eventPubSub.on('twitter-data', (data) => {
+    //     pub.publish(config.redisAggChannel, data);
+    // });
 };
 
 module.exports = (config) => {
