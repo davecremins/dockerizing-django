@@ -26,4 +26,18 @@ describe('TweetFilter', function () {
       let result = tweetFilter.filter(tweet);
       expect(result).not.equal(null);
    });
+
+   it('filter should return tweet when tweet has no co-ordinates but has a place object', function () {
+      let tweet = {
+          text: 'abc',
+          user: {
+              geo_enabled: false
+          },
+          coordinates: null,
+          place: {}
+      };
+
+      let result = tweetFilter.filter(tweet);
+      expect(result).not.equal(null);
+   });
 });

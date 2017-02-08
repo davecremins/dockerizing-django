@@ -9,7 +9,7 @@ let hasLocation = (tweet) => {
 
 let hasCoordinates = (tweet) => {
     return typeChecker(tweet.coordinates) || 
-           typeChecker(tweet.places);
+           typeChecker(tweet.place);
            //typeChecker(tweet.places.bounding_box.coordinates);
 };
 
