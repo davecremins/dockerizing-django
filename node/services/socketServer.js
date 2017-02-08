@@ -1,4 +1,4 @@
-let eventWatcher = require('../lib/eventWatcher.js').getInstance();
+let eventWatcher = require('../lib/eventPubSub.js').getInstance();
 let socketManager = require('../lib/socketMapper.js');
 
 let addToManager = (socket, id) => {
@@ -6,7 +6,7 @@ let addToManager = (socket, id) => {
 };
 
 let redisMessageHandler = (message) => {
-    console.log(`redisMessage received by socket service via eventWatcher: ${message}`)
+    console.log(`redisMessage received by socket service via eventWatcher: ${message}`);
 };
 
 module.exports = (server) => {

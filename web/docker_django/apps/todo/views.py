@@ -5,6 +5,7 @@ from .models import Tag, UserTagLink
 from redis import Redis
 
 redis = Redis(host='redis', port=6379)
+redisChannel = 'user-data-channel'
 
 @login_required
 def home(request):
@@ -18,7 +19,7 @@ def create_new_sub_tag(request):
     newTagObj = Tag.objects.create(tag=tags)
     UserTagLink.objects.create(tag=newTagObj,user=request.user)
     data = {'coords': coords, 'tags': tags, 'userId': request.user.id}
-    redis.publish('comms', data)
+    redis.publish(redisChannel, data)
     return redirect('/')
 
 def list_subbed_tags_for_user(request):

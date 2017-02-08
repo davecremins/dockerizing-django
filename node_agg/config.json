@@ -1,5 +1,6 @@
 {
     "redis": "redis",
-    "redisCommName": "comms",
-    "redisService": "aggData"
+    "redisService": "redisCommsService",
+    "redisAggChannel": "agg-data-channel",
+    "redisUserChannel": "user-data-channel"
 }
