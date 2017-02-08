@@ -6,7 +6,7 @@ let addToManager = (socket, id) => {
 };
 
 let redisMessageHandler = (message) => {
-    console.log(`Redis message received by socket service: ${message}`)
+    console.log(`redisMessage received by socket service via eventWatcher: ${message}`)
 };
 
 module.exports = (server) => {
