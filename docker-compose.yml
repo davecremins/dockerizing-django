@@ -54,3 +54,12 @@ services:
     env_file: .node_env
     depends_on:
       - "redis"
+  
+  node_agg:
+    restart: always
+    build: ./node_agg
+    expose:
+      - "4000"
+    env_file: .node_env
+    depends_on:
+      - "redis"

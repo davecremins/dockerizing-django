@@ -3,6 +3,6 @@ module.exports = (config) => {
     var sub = redis.createClient({host: config.redis});
     sub.subscribe(config.redisCommName);
     sub.on('message', function(channel, message){        
-        console.log(`Message received for node: ${message}`);    
+        console.log(`Message received for node_agg: ${message}`);    
     });
 };

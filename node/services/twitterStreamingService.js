@@ -9,18 +9,29 @@ let twitter = new Twit({
   access_token_secret: process.env.twit_access_token_secret
 });
 
-let service = () => {
+let stream;
+
+let startStreamService = () => {
     // Geopoint calculation using twitters long/lat convention - 20 KM distance
     let location = [ '-8.873204', '52.399176', '-7.918104', '52.978103' ]; 
-    let stream = twitter.stream('statuses/filter', { locations: location });
+    stream = twitter.stream('statuses/filter', { locations: location });
     stream.on('tweet', function (tweet) {
         let fTweet = tweetFilter.filter(tweet);
         tweetOperator.process(fTweet);
     });
+    console.log('Streaming service started...');
+};
+
+let stopStreamService = () => {
+    stream.stop();
+    console.log('Streaming service stopped...');
 };
 
 module.exports = {
     start: () => {
-        service();
+        startStreamService();
+    },
+    stop: () =>{
+        stopStreamService();
     }
 };

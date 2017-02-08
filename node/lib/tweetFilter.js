@@ -16,7 +16,6 @@ let hasCoordinates = (tweet) => {
 module.exports = {
     filter: (tweet) => {
         console.log(`BEFORE FILTERING: Tweet username: ${tweet.user.name}`);
-        console.log(tweet);
         let arr = [tweet];
         arr = arr.filter(hasLocation)
                  .filter(hasCoordinates);
