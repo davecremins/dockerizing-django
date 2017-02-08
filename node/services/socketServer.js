@@ -1,10 +1,16 @@
-var socketManager = require('../lib/socketMapper.js');
+let eventWatcher = require('../lib/eventWatcher.js').getInstance();
+let socketManager = require('../lib/socketMapper.js');
+
 let addToManager = (socket, id) => {
     socketManager.addSocketForId(socket, id);
 };
 
+let redisMessageHandler = (message) => {
+    console.log(`Redis message received by socket service: ${message}`)
+};
+
 module.exports = (server) => {
-    var io = require('socket.io')(server);
+    let io = require('socket.io')(server);
     io.on('connection', function(socket){
         console.log("Connection received from client");
         socket.on('register-identifier', function(clientId) {
@@ -15,4 +21,6 @@ module.exports = (server) => {
 
     let num = 0;
     setInterval(() => io.emit('test-message', `Message ${++num}`), 5000);
+
+    eventWatcher.on('redisMessage', redisMessageHandler);
 };

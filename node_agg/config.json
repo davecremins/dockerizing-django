@@ -1,4 +1,5 @@
 {
     "redis": "redis",
-    "redisCommName": "comms"
+    "redisCommName": "comms",
+    "redisService": "aggData"
 }
