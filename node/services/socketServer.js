@@ -7,6 +7,8 @@ let addToManager = (socket, id) => {
 
 let redisMessageHandler = (message) => {
     console.log(`redisMessage received by socket service via eventWatcher: ${message}`);
+    let data = JSON.parse(message);
+    socketManager.getSocketForId(data.userId).emit('relay-message',`Message: ${data.tags} - Coords: ${data.coords}`);
 };
 
 module.exports = (server) => {

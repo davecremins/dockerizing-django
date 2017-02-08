@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+import json
 from .models import Tag, UserTagLink
-
 from redis import Redis
 
 redis = Redis(host='redis', port=6379)
@@ -18,8 +18,8 @@ def create_new_sub_tag(request):
     coords = request.POST.get('coords', None)
     newTagObj = Tag.objects.create(tag=tags)
     UserTagLink.objects.create(tag=newTagObj,user=request.user)
-    data = {'coords': coords, 'tags': tags, 'userId': request.user.id}
-    redis.publish(redisChannel, data)
+    data = {"coords": coords, "tags": tags, "userId": request.user.id}
+    redis.publish(redisChannel, json.dumps(data))
     return redirect('/')
 
 def list_subbed_tags_for_user(request):

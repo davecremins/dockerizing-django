@@ -23,6 +23,9 @@
         socket.on('test-message', function(data){
           console.log(data);
         });
+        socket.on('relay-message', function(data){
+          alert(data);
+        });
 
         navigator.geolocation.getCurrentPosition(function(position) {
           var $coords = $('#coords');
