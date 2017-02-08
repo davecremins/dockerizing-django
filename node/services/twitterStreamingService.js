@@ -1,4 +1,6 @@
-let Twit = require('twit');
+let Twit = require('twit'),
+    tweetFilter = require('../lib/tweetFilter.js'),
+    tweetOperator = require('../lib/tweetOperator.js');
  
 let twitter = new Twit({
   consumer_key: process.env.twit_consumer_key,
@@ -8,12 +10,12 @@ let twitter = new Twit({
 });
 
 let service = () => {
-    // Geopoint calculation uing twitters long/lat convention - 20 KM distance
+    // Geopoint calculation using twitters long/lat convention - 20 KM distance
     let location = [ '-8.873204', '52.399176', '-7.918104', '52.978103' ]; 
     let stream = twitter.stream('statuses/filter', { locations: location });
     stream.on('tweet', function (tweet) {
-        console.log(`Tweet text: ${tweet.text}`);
-        console.log(`Tweet location: ${tweet.user.location}`);
+        let fTweet = tweetFilter.filter(tweet);
+        tweetOperator.process(fTweet);
     });
 };
 
