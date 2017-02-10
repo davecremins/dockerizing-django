@@ -1,7 +1,6 @@
 let redis = require('redis');
-
-let redisClientFactory = (config) => {
-    return redis.createClient({host: config.redis});
+let redisClientFactory = (redisName) => {
+    return redis.createClient({host: redisName});
 };
 
 let webSubHandler = (pub, sub, config) => {
@@ -13,9 +12,8 @@ let webSubHandler = (pub, sub, config) => {
 };
 
 module.exports = (config) => {
-    let pub = redisClientFactory(config), 
-        sub = redisClientFactory(config);
+    let pub = redisClientFactory(config.redis), 
+        sub = redisClientFactory(config.redis);
 
     webSubHandler(pub, sub, config);
-    //servicePubHandler(pub, config);
 };

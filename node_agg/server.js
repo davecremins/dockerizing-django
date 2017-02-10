@@ -1,2 +1,1 @@
-var config = require('./config.json');
-require('./services/redisBus.js')(config);
+require('./services/redisBus.js')(require('./config.json'));
