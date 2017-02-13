@@ -1,6 +1,6 @@
 let Twit = require('twit'),
     tweetFilter = require('../lib/tweetFilter.js'),
-    tweetOperator = require('../lib/tweetOperator.js');
+    eventFactory = require('../lib/eventPubSub').Factory;
  
 let twitter = new Twit({
   consumer_key: process.env.twit_consumer_key,
@@ -9,7 +9,7 @@ let twitter = new Twit({
   access_token_secret: process.env.twit_access_token_secret
 });
 
-let stream;
+let stream, eventManager = eventFactory.create();
 
 let startStreamService = () => {
     // Geopoint calculation using twitters long/lat convention - 20 KM distance
@@ -17,7 +17,11 @@ let startStreamService = () => {
     stream = twitter.stream('statuses/filter', { locations: location });
     stream.on('tweet', function (tweet) {
         let fTweet = tweetFilter.filter(tweet);
-        tweetOperator.process(fTweet);
+        if(fTweet){
+            eventManager.emit('newTweet', fTweet);
+        } else{
+            console.log('Tweet filtered :(');
+        }
     });
     console.log('Streaming service started...');
 };
@@ -33,5 +37,6 @@ module.exports = {
     },
     stop: () =>{
         stopStreamService();
-    }
+    },
+    events: eventManager
 };
