@@ -1,33 +1,30 @@
-let eventWatcher = require('../lib/eventPubSub.js').getInstance();
 let socketManager = require('../lib/socketMapper.js');
 
 let addToManager = (socket, id) => {
     socketManager.addSocketForId(socket, id);
+    console.log(`Client id ${id} for socket id ${socket.id} has been added to manager`);
 };
 
-let redisMessageHandler = (message) => {
-    console.log(`redisMessage received by socket service via eventWatcher: ${message}`);
-    let data = JSON.parse(message);
+let pingUser = (data) => {
     socketManager.getSocketForId(data.userId).emit('relay-message',`Message: ${data.tags} - Coords: ${data.coords}`);
 };
 
-let twitterDataHandler = (io) => {
+let pingAll = (io) => {
     return (data) => {
         io.emit('test-message', {tuser: data.user.name, text: data.text});
     };
-}
+};
 
 module.exports = (server) => {
     let io = require('socket.io')(server);
     io.on('connection', function(socket){
-        console.log("Connection received from client");
         socket.on('register-identifier', function(clientId) {
-            console.log(`Received client id ${clientId} for socket id ${socket.id}`);
             addToManager(socket, clientId);
         });
     });
 
-    // Should probably register these handlers with socketServer as data feeds
-    eventWatcher.on('redisMessage', redisMessageHandler);
-    eventWatcher.on('twitter-data', twitterDataHandler(io));
+    return {
+        pingUser,
+        pingAll: pingAll(io)
+    };
 };

@@ -1,12 +1,20 @@
-var config = require('./config.json');
-var server = require('./services/httpServer.js')(config);
-require('./services/socketServer.js')(server);
-require('./services/redisBus.js')(config);
+let config = require('./config.json'),
+    server = require('./services/httpServer.js')(config),
+    socketServer = require('./services/socketServer.js')(server);
 
-var twitterService = require('./services/twitterStreamingService.js');
+let redisBus = require('./services/redisBus.js')(config);
+redisBus.events.on('redisMessage', (message) => {
+    let data = JSON.parse(message);
+    if(data.userId) {
+        socketServer.pingUser(data);
+    }
+});
+
+let twitterService = require('./services/twitterStreamingService.js');
 twitterService.start();
 twitterService.events.on('newTweet', (tweet) => {
     console.log(`Tweet text: ${tweet.text}`);
     console.log(`Tweet coordinates: ${tweet.coordinates}`);
     console.log(`Tweet location: ${tweet.user.location}`);
+    socketServer.pingAll(tweet);
 });
