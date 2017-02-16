@@ -7,6 +7,8 @@ redisBus.events.on('redisMessage', (message) => {
     let data = JSON.parse(message);
     if(data.userId) {
         socketServer.pingUser(data);
+    } else {
+        console.log('redisMessage received but there was no id associated with it');
     }
 });
 

@@ -11,7 +11,10 @@ let pingUser = (data) => {
 
 let pingAll = (io) => {
     return (data) => {
-        io.emit('test-message', {tuser: data.user.name, text: data.text});
+        io.emit('test-message', {
+            tuser: data.user.name, 
+            text: data.text
+        });
     };
 };
 
