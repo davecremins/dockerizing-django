@@ -7,6 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static "main.css" %}">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 450px;
+        width: 100%;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -15,6 +23,7 @@
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYKFLoojwDGH-negBnQfI2-K_HpB6Uezs" async defer></script>
     <script src="http://localhost:4000/socket.io/socket.io.js"></script>
     <script>
       $(document).ready(function(){
@@ -26,12 +35,55 @@
         socket.on('relay-message', function(data){
           alert(data);
         });
+        
+        var map = null;
 
         navigator.geolocation.getCurrentPosition(function(position) {
           var $coords = $('#coords');
           $coords.val(position.coords.latitude + ' ' + position.coords.longitude);
-          console.log(position.coords.latitude); 
-          console.log(position.coords.longitude);
+          
+          var uluru = {lat: position.coords.latitude, lng: position.coords.longitude};
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: uluru,
+            zoom: 9
+          });
+
+          var marker = new google.maps.Marker({
+            position: uluru,
+            map: map,
+            title: 'Current location',
+            animation: google.maps.Animation.DROP
+          });
+          
+          var markerManager = [], max = 10;
+
+          var createNearbyMarker = function(){
+            var getRandomInt = function(min, max) {
+              return Math.random();
+              // min = Math.ceil(min);
+              // max = Math.floor(max);
+              // return Math.floor(Math.random() * (max - min)) + min;
+            }
+            var rand = getRandomInt(1, 5);
+            var randomLoc = {lat: position.coords.latitude+rand, lng: position.coords.longitude+rand};
+            console.debug(randomLoc);
+            var marker = new google.maps.Marker({
+              position: randomLoc,
+              map: map
+            });
+
+            markerManager.push(marker);
+            if(markerManager.length == max){
+              var i = 0;
+              while(i < max){
+                var obj = markerManager.shift();
+                obj.setMap(null);
+                i++;
+              }
+            }
+          };
+
+          setInterval(createNearbyMarker, 5000);
         });
       });
     </script>

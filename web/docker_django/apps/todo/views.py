@@ -4,6 +4,9 @@ import json
 from .models import Tag, UserTagLink
 from redis import Redis
 
+'''
+Put these into ENV variables
+'''
 redis = Redis(host='redis', port=6379)
 redisChannel = 'user-data-channel'
 
