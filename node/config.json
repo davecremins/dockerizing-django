@@ -1,0 +1,6 @@
+{
+    "port": 4000,
+    "redis": "redis",
+    "redisService": "redisCommsService",
+    "redisAggChannel": "agg-data-channel"
+}

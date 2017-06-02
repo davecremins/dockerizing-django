@@ -6,7 +6,7 @@ services:
     expose:
       - "8000"
     links:
-      - postgres:postgres
+      - db:db
       - redis:redis
     volumes:
       - /usr/src/app
@@ -30,7 +30,7 @@ services:
       - web:web
       - node:node
 
-  postgres:
+  db:
     restart: always
     image: postgres:latest
     ports:
@@ -51,5 +51,15 @@ services:
     build: ./node
     expose:
       - "4000"
+    env_file: .node_env
+    depends_on:
+      - "redis"
+  
+  node_agg:
+    restart: always
+    build: ./node_agg
+    expose:
+      - "4000"
+    env_file: .node_env
     depends_on:
       - "redis"

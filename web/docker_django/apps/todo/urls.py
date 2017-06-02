@@ -7,6 +7,6 @@ from . import views
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
-    #url(r'^logout/$', auth_views.logout, name='logout'),
+    url(r'^logout/$', auth_views.logout, name='logout', kwargs={'next_page': '/'}),
     url(r'^admin/', admin.site.urls),
 ]

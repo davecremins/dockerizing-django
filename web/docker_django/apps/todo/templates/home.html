@@ -6,6 +6,10 @@
 <div class="text-center">
   {% load staticfiles %}
   <br>
+  <h3>Welcome <strong class="user" style="color: #5cb85c;" data-userinfo="{{ user.id }}">{{ user.username }}</strong>
+  </h3>
+  <a href="{% url 'logout' %}">logout</a>
+  <br>
   <img src="http://media.django.es.s3.amazonaws.com/nuevo/images/djangopony.png">
   <br>
   <p>This page has been viewed <strong>{{counter}}</strong> times!</p>
@@ -13,10 +17,17 @@
 
 <br>
 
+<div id="map"></div>
+
+<br>
+
 <form action="/" method="POST">
   {% csrf_token %}
   <div class="form-group">
-    <input name="item_text" class="form-control input-lg" type="text" placeholder="Enter tags you are interested in..." required>
+    <input name="item_tags" class="form-control input-lg" type="text" placeholder="Enter tags you are interested in..." required>
+  </div>
+  <div class="form-group">
+    <input id="coords" name="coords" class="form-control input-lg hidden" type="text" required>
   </div>
   <input type="submit" class="btn btn-success btn-lg btn-block" value="Submit">
 </form>

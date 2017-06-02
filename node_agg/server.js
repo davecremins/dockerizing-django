@@ -1,0 +1,1 @@
+require('./services/redisBus.js')(require('./config.json'));

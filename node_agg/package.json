@@ -1,0 +1,16 @@
+{
+  "name": "node_agg",
+  "version": "0.0.1",
+  "description": "Aggregates data for users",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Dave Cremins",
+  "license": "ISC",
+  "dependencies": {
+    "geopoint": "^1.0.1",
+    "redis": "^2.6.5"
+  }
+}

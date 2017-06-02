@@ -1,0 +1,6 @@
+{
+    "redis": "redis",
+    "redisService": "redisCommsService",
+    "redisAggChannel": "agg-data-channel",
+    "redisUserChannel": "user-data-channel"
+}

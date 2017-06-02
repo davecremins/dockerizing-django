@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+import json
 from .models import Tag, UserTagLink
-
 from redis import Redis
 
+'''
+Put these into ENV variables
+'''
 redis = Redis(host='redis', port=6379)
+redisChannel = 'user-data-channel'
 
 @login_required
 def home(request):
@@ -13,10 +17,12 @@ def home(request):
     return list_subbed_tags_for_user(request)
 
 def create_new_sub_tag(request):
-    data = request.POST.get('item_text', None)
-    newTagObj = Tag.objects.create(tag=data)
+    tags = request.POST.get('item_tags', None)
+    coords = request.POST.get('coords', None)
+    newTagObj = Tag.objects.create(tag=tags)
     UserTagLink.objects.create(tag=newTagObj,user=request.user)
-    redis.publish('comms', data)
+    data = {"coords": coords, "tags": tags, "userId": request.user.id}
+    redis.publish(redisChannel, json.dumps(data))
     return redirect('/')
 
 def list_subbed_tags_for_user(request):

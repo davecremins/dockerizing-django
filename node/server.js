@@ -1,20 +1,22 @@
-// Setup express and socket.io
-var server = require('http').createServer(require('express')());
-var io = require('socket.io')(server);
+let config = require('./config.json'),
+    server = require('./services/httpServer.js')(config),
+    socketServer = require('./services/socketServer.js')(server);
 
-var port = 4000;
-server.listen(port, function () {
-   console.log("Express server running on port %s", port);
+let redisBus = require('./services/redisBus.js')(config);
+redisBus.events.on('redisMessage', (message) => {
+    let data = JSON.parse(message);
+    if(data.userId) {
+        socketServer.pingUser(data);
+    } else {
+        console.log('redisMessage received but there was no id associated with it');
+    }
 });
 
-io.on('connection', function (socket) {
-    console.log('socket connection received');
-});
-
-// Setup redis Pub/Sub bus
-var redis = require('redis');
-var sub = redis.createClient({host: 'redis'});
-sub.subscribe('comms');
-sub.on('message', function(channel, message){        
-    console.log(`Message received: ${message}`);    
+let twitterService = require('./services/twitterStreamingService.js');
+twitterService.start();
+twitterService.events.on('newTweet', (tweet) => {
+    console.log(`Tweet text: ${tweet.text}`);
+    console.log(`Tweet coordinates: ${tweet.coordinates}`);
+    console.log(`Tweet location: ${tweet.user.location}`);
+    socketServer.pingAll(tweet);
 });
