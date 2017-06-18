@@ -36,8 +36,8 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./pgdata:/var/lib/postgresql/data/
-
+      - postgressql-data-volume:/var/lib/postgresql/data/
+  
   redis:
     restart: always
     image: redis:latest
@@ -51,7 +51,9 @@ services:
     build: ./node
     expose:
       - "4000"
-    env_file: .node_env
+    volumes:
+      - ../:/workspace/
+    # env_file: .node_env
     depends_on:
       - "redis"
   
@@ -60,6 +62,12 @@ services:
     build: ./node_agg
     expose:
       - "4000"
-    env_file: .node_env
+    volumes:
+      - ../:/workspace/
+    # env_file: .node_env
     depends_on:
       - "redis"
+
+volumes:
+    postgressql-data-volume:
+      external: true

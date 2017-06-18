@@ -12,11 +12,15 @@ redisBus.events.on('redisMessage', (message) => {
     }
 });
 
-let twitterService = require('./services/twitterStreamingService.js');
-twitterService.start();
-twitterService.events.on('newTweet', (tweet) => {
-    console.log(`Tweet text: ${tweet.text}`);
-    console.log(`Tweet coordinates: ${tweet.coordinates}`);
-    console.log(`Tweet location: ${tweet.user.location}`);
-    socketServer.pingAll(tweet);
-});
+try{
+    let twitterService = require('./services/twitterStreamingService.js');
+    twitterService.start();
+    twitterService.events.on('newTweet', (tweet) => {
+        console.log(`Tweet text: ${tweet.text}`);
+        console.log(`Tweet coordinates: ${tweet.coordinates}`);
+        console.log(`Tweet location: ${tweet.user.location}`);
+        socketServer.pingAll(tweet);
+    });
+} catch(e){
+    console.error(`Error occured for streaming service, gracefully failing`);
+}

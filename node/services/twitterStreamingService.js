@@ -1,13 +1,26 @@
 let Twit = require('twit'),
     tweetFilter = require('../lib/tweetFilter.js'),
-    eventFactory = require('../lib/eventPubSub').Factory;
+    eventFactory = require('../lib/eventPubSub').Factory,
+    twitter = null;
  
-let twitter = new Twit({
-  consumer_key: process.env.twit_consumer_key,
-  consumer_secret: process.env.twit_consumer_secret,
-  access_token: process.env.twit_access_token,
-  access_token_secret: process.env.twit_access_token_secret
-});
+try{
+    twitter = new Twit({
+    consumer_key: process.env.twit_consumer_key,
+    consumer_secret: process.env.twit_consumer_secret,
+    access_token: process.env.twit_access_token,
+    access_token_secret: process.env.twit_access_token_secret
+    });
+} catch(e){
+    console.error(`Error occured with Twit: ${e}`);
+    twitter = {
+        stream: () => {
+            console.log(`Defaulting to no stream`);
+        },
+        stop: () => {
+            console.log(`Stopping default stream`);
+        }
+    };
+} 
 
 let stream, eventManager = eventFactory.create();
 
