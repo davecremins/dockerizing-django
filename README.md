@@ -1,6 +1,8 @@
-## Comms Between Different Containers
+## SERIOUS UPDATE REQUIRED
+- How to get running on Windows or Unix type OS
+- Using `Make` commands
 
-Forked From -> https://realpython.com/blog/python/django-development-with-docker-compose-and-machine/
+## Comms Between Different Containers
 
 Featuring:
 
