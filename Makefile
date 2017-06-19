@@ -1,7 +1,7 @@
 build:
 	docker volume create --name postgressql-data-volume -d local
 	docker-compose build
-env: 
+env: build 
 	@docker-compose up -d
 destroy-env:
 	@docker-compose down
